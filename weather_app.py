@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from PIL import Image,ImageTk
 
 import requests
 import os
@@ -34,15 +35,18 @@ def get_weather(location):
 
     return final_data
 
-# print(get_weather('Murshidabad'))
-
 def search():
     city = city_text.get()
     weather = get_weather(city)
     print(weather)
     if weather:
         location_lbl['text'] = '{}, {}'.format(weather[0], weather[1])
-        image['bitmap'] = 'weather_icons/{}.png'.format(weather[4])
+
+        # load and display image
+        img = ImageTk.PhotoImage(Image.open('C:/Users/mamit/OneDrive/Desktop/code/Python Projects/Weather App/weather_icons/{}.png'.format(weather[4])))
+        img_lbl.config(image=img)
+        img_lbl.image = img
+
         temp_lbl['text'] = '{:.2f}°C , {:.2f}°F'.format(weather[2], weather[3])
         weather_lbl['text'] = weather[5]
     else:
@@ -50,7 +54,9 @@ def search():
 
 app = Tk()
 app.title("Weather App")
-app.geometry('700x350')
+app.geometry('400x300')
+
+app.configure(bg='#BFACE2')
 
 city_text = StringVar()
 city_entry = Entry(app, textvariable=city_text)
@@ -59,17 +65,18 @@ city_entry.pack()
 search_btn = Button(app, text="Search Weather", width=15, command=search)
 search_btn.pack()
 
-location_lbl = Label(app, text='', font=('bold', 20))
+location_lbl = Label(app, text='', font=('bold', 20), bg='#BFACE2')
 location_lbl.pack()
 
-image = Label(app, bitmap='')
-image.pack()
-# image = PhotoImage()
 
-temp_lbl = Label(app, text='')
+# create label for image
+img_lbl = Label(app, bg='#BFACE2')
+img_lbl.pack()
+
+temp_lbl = Label(app, text='', bg='#BFACE2')
 temp_lbl.pack()
 
-weather_lbl = Label(app, text='')
+weather_lbl = Label(app, text='', bg='#BFACE2')
 weather_lbl.pack()
 
 app.mainloop()
