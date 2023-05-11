@@ -6,7 +6,8 @@ import requests
 import os
 from datetime import datetime
 
-user_api = os.environ['current_weather_data']
+# user_api = os.environ['current_weather_data']
+user_api = '9fd9bfa8a48d451eb8388d105d131e30'
 
 def get_weather(location):
     complete_api_link = "https://api.openweathermap.org/data/2.5/weather?q="+location+"&appid="+user_api
